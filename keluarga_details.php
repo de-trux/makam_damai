@@ -1,6 +1,7 @@
 <?php
   require_once 'db.php';
-
+  include("auth_session.php");
+  
   if(isset($_POST['search']) && !empty($_POST['search'])){
     $nama_makam = $_POST['search'];
     $query = "SELECT * FROM makam_keluarga WHERE alamat_makam_keluarga = '$nama_makam'";
@@ -22,7 +23,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap 5 Responsive Landing Page Design</title>
+    <title><?= $data['alamat_makam_keluarga'] ?></title>
     
     <!-- All CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

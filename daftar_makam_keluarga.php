@@ -1,6 +1,7 @@
 <?php
 require 'forum_function.php';
 require 'db.php';
+include("auth_session.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +10,7 @@ require 'db.php';
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap 5 Responsive Landing Page Design</title>
+    <title>Daftar Makam Keluarga</title>
     
     <!-- All CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -57,7 +58,7 @@ require 'db.php';
               <form method="post">
                 <div class="form-group">
                   <label for="nama_daftar_keluarga">Name Lengkap</label>
-                  <input type="text" class="form-control" name="nama_daftar_keluarga" placeholder="Nama Lengkap">
+                  <input type="text" class="form-control" name="nama_daftar_keluarga" placeholder="Nama Lengkap" required>
                 </div>
                 <br>
                 <div class="form-group">
@@ -95,11 +96,17 @@ require 'db.php';
                   <input type="text" class="form-control" name="alamat_rumah_keluarga" placeholder="Alamat">
                 </div>
                 <br>
-                <div class="form-group">
-                  <label for="alamat_makam_keluarga">Alamat Makam</label>
-                  <input type="text" class="form-control" name="alamat_makam_keluarga" placeholder="Alamat Makam">
-                </div>
-                <br>
+                <label for="alamat_makam_keluarga">Pilih Makam</label>
+                  <select class="form-control" name="alamat_makam_keluarga">
+                      <?php
+                      $query = "SELECT * FROM daftar_makam";
+                      $result = mysqli_query($con, $query);
+                      while($row = mysqli_fetch_array($result)) {
+                          echo "<option value='".$row['nama_daftar_makam']."'>".$row['nama_daftar_makam']."</option>";
+                      };
+                      ?>
+                  </select> 
+                <br>  
                 <div class="form-group">
                     <label for="file-upload">Foto KTP</label>
                     <div>

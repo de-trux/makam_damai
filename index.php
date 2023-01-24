@@ -22,7 +22,7 @@ if (mysqli_num_rows($result) > 0) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap 5 Responsive Landing Page Design</title>
+    <title>DAMAI | Data Makam Indonesia</title>
     
     <!-- All CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -104,7 +104,7 @@ if (mysqli_num_rows($result) > 0) {
                           <div class="card-body">
                             <i class="bi bi-geo-alt-fill"></i>
                               <h3 class="card-title">Identifikasi Makam</h3>
-                              <a class="btn bg-warning text-dark" href="pencarian.php">Cari</a>
+                              <a class="btn bg-warning text-dark" href="identifikasi_makam.php">Cari</a>
                           </div>
                       </div>
                   </div>

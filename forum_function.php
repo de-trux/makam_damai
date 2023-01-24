@@ -92,4 +92,82 @@ if(isset($_POST['search']) && !empty($_POST['search'])){
     }
 };
 
+if(isset($_POST['addmakam'])){
+    $nama_daftar_makam = $_POST['nama_daftar_makam'];
+    $provinsi_daftar_makam = $_POST['provinsi_daftar_makam'];
+    $kabupaten_daftar_makam = $_POST['kabupaten_daftar_makam'];
+    $kecamatan_daftar_makam = $_POST['kecamatan_daftar_makam'];
+    $desa_daftar_makam = $_POST['desa_daftar_makam'];
+    $rt_rw_daftar_makam = $_POST['rt_rw_daftar_makam']; 
+    $luas_daftar_makam = $_POST['luas_daftar_makam'];
+    $tahun_daftar_makam = $_POST['tahun_daftar_makam'];
+    $tampungan_daftar_makam = $_POST['tampungan_daftar_makam'];
+    $nama_pengurus_makam = $_POST['nama_pengurus_makam'];
+    $no_hp_pengurus = $_POST['no_hp_pengurus'];
+    $alamat_pengurus = $_POST['alamat_pengurus'];
+    
+    if(($_FILES["gambar_makam"]["error"] == 4) AND ($_FILES["gambar_pengurus"]["error"] == 4)){
+      echo
+      "<script> alert('Image Does Not Exist'); </script>"
+      ;
+    }
+    else{
+      $fileName_makam = $_FILES["gambar_makam"]["name"];
+      $fileSize_makam = $_FILES["gambar_makam"]["size"];
+      $tmpName_makam = $_FILES["gambar_makam"]["tmp_name"];
+  
+      $validImageExtension_makam = ['jpg', 'jpeg', 'png'];
+      $imageExtension_makam = explode('.', $fileName_makam);
+      $imageExtension_makam = strtolower(end($imageExtension_makam));
+
+      $fileName_pengurus = $_FILES["gambar_pengurus"]["name"];
+      $fileSize_pengurus = $_FILES["gambar_pengurus"]["size"];
+      $tmpName_pengurus = $_FILES["gambar_pengurus"]["tmp_name"];
+  
+      $validImageExtension_pengurus = ['jpg', 'jpeg', 'png'];
+      $imageExtension_pengurus = explode('.', $fileName_pengurus);
+      $imageExtension_pengurus = strtolower(end($imageExtension_pengurus));
+
+      if (( !in_array($imageExtension_makam, $validImageExtension_makam) ) AND ( !in_array($imageExtension_pengurus, $validImageExtension_pengurus) )){
+        echo
+        "
+        <script>
+          alert('Invalid Image Extension');
+        </script>
+        ";
+      }
+      else if(($fileSize_makam > 1000000) AND ($fileSize_pengurus > 1000000)){
+        echo
+        "
+        <script>
+          alert('Image Size Is Too Large');
+        </script>
+        ";
+      }
+      else{
+        $newImageName_makam = uniqid();
+        $newImageName_makam .= '.' . $imageExtension_makam;
+
+        $newImageName_pengurus = uniqid();
+        $newImageName_pengurus .= '.' . $imageExtension_pengurus;
+  
+        move_uploaded_file($tmpName_makam, 'gambar/' . $newImageName_makam);
+        move_uploaded_file($tmpName_pengurus, 'gambar/' . $newImageName_pengurus);
+        
+        $sql = "INSERT INTO daftar_makam (nama_daftar_makam, provinsi_daftar_makam, kabupaten_daftar_makam, kecamatan_daftar_makam, desa_daftar_makam, rt_rw_daftar_makam, luas_daftar_makam, tahun_daftar_makam, tampungan_daftar_makam, nama_pengurus_makam, no_hp_pengurus, alamat_pengurus, gambar_makam, gambar_pengurus) 
+        VALUES ('$nama_daftar_makam','$provinsi_daftar_makam','$kabupaten_daftar_makam','$kecamatan_daftar_makam','$desa_daftar_makam','$rt_rw_daftar_makam','$luas_daftar_makam','$tahun_daftar_makam','$tampungan_daftar_makam','$nama_pengurus_makam','$no_hp_pengurus','$alamat_pengurus', '$newImageName_makam', '$newImageName_pengurus')";
+        $result = mysqli_query($con, $sql);
+    
+        if($result){
+        header('location:daftar_berhasil.php');
+        }else{
+        echo "Error updating price: " . mysqli_error($con);
+    
+        };
+      }
+    }
+
+    
+};
+
 ?>
